@@ -31,7 +31,7 @@ if (error) {
 console.log(error);
 
   
-  return NextResponse.json({ message: "Hello from Next.js" }, { status: 200 }); 
+  return NextResponse.json({ message: "Excecution went well!" }, { status: 200 }); 
 
 
 };

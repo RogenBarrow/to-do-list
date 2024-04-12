@@ -22,7 +22,7 @@ export async function POST(req) {
 async function main() {
   // send mail with defined transport object
   const info = await transporter.sendMail({
-    from: '"EY Task Management 👻" <maddison53@ethereal.email>', // sender address
+    from: '"EY Task Management" <maddison53@ethereal.email>', // sender address
     to: "norma37@ethereal.email", // list of receivers
     subject: "You got a task!", // Subject line
     text: `${user} this is your added task: 
@@ -37,9 +37,7 @@ async function main() {
 
 main().catch(console.error);
 
-  
-  
-  return NextResponse.json({ message: "Hello from Next.js" }, { status: 200 }); 
+  return NextResponse.json({ message: "Excecution went well." }, { status: 200 }); 
 
 
 };

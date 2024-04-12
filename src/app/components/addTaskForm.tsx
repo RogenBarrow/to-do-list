@@ -10,6 +10,7 @@ function AddTaskForm() {
   const [assignees, setAssignees] = useState<{ name: string; email: string }[]>([]);
   const [todoList, setTodoList] = useState<{ task: string; date: string; assignee: string; assigneeEmail: string }[]>([]);
 
+  //This will fetch the data from the data base and populate the data in the table.
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,9 +18,9 @@ function AddTaskForm() {
         if (!response.ok) {
           throw new Error('Failed to fetch todo list');
         }
-        const { data } = await response.json(); // Destructure data from the response
+        const { data } = await response.json(); 
         console.log("this is the fetched data: ", data);
-        setTodoList(data); // Set the fetched data to the todoList state
+        setTodoList(data); 
       } catch (error) {
         console.error('Error fetching todo list:', error);
       }
@@ -56,6 +57,7 @@ function AddTaskForm() {
     }
   };
 
+  //handle adding task with logic build in.
   const handleAddTask = async () => {
     if (task.trim() !== "" && date.trim() !== "" && assignee.trim() !== "" && assigneeEmail.trim() !== "") {
       if (editIndex !== null) {
@@ -63,7 +65,8 @@ function AddTaskForm() {
         updatedTodoList[editIndex] = { task, date, assignee, assigneeEmail };
         setTodoList(updatedTodoList);
         setEditIndex(null);
-  
+        
+        //This logic will look for changes in the row and post this back to the API database.
         try {
           const response = await fetch('/api/dbedit', {
             method: 'POST',
@@ -82,6 +85,7 @@ function AddTaskForm() {
           console.error('Error updating task:', error);
         }
       } else {
+        //This logic will post the entry to the database.
         setTodoList([...todoList, { task, date, assignee, assigneeEmail }]);
         setTask("");
         setDate("");
@@ -107,6 +111,7 @@ function AddTaskForm() {
         }  
       
         try {
+          //This will send the information to be emailed.
           const response = await fetch('/api/', {
             method: 'POST',
             headers: {

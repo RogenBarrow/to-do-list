@@ -10,11 +10,9 @@ export async function GET(req, res) {
       throw error;
     }
     
-    console.log(data); // Log the fetched data
-    
-    return res.json({ data }); // Send fetched data as JSON response
+    return res.json({ data });
   } catch (error) {
-    console.error(error); // Log any errors that occur during the fetch process
-    return res.status(500).json({ error: 'Internal Server Error' }); // Return a generic error response
+    console.error(error); 
+    return res.status(500).json({ error: 'Internal Server Error' }); 
   }
 }
