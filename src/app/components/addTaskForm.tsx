@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 
 function AddTaskForm() {
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -10,6 +10,26 @@ function AddTaskForm() {
   const [assignees, setAssignees] = useState<{ name: string; email: string }[]>([]);
   const [todoList, setTodoList] = useState<{ task: string; date: string; assignee: string; assigneeEmail: string }[]>([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/dbget');
+        if (!response.ok) {
+          throw new Error('Failed to fetch todo list');
+        }
+        const { data } = await response.json(); // Destructure data from the response
+        console.log("this is the fetched data: ", data);
+        setTodoList(data); // Set the fetched data to the todoList state
+      } catch (error) {
+        console.error('Error fetching todo list:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+
+  
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTask(event.target.value);
   };
